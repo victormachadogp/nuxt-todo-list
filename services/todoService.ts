@@ -1,9 +1,16 @@
 import { ref } from "vue";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFcLUWjDkAk7IDM3Q3Yv3T_86FtLlciLg",
+  apiKey: "AIzaSyAGMq9pfg_SBDGaNjs_7-S1jUtQzX_53n8",
   authDomain: "nuxt-back-28fe6.firebaseapp.com",
   projectId: "nuxt-back-28fe6",
   storageBucket: "nuxt-back-28fe6.firebasestorage.app",
@@ -47,11 +54,24 @@ export const useTodos = () => {
     }
   };
 
+  const toggleTodo = async (todoId) => {
+    const todo = todos.value.find((t) => t.id === todoId);
+    try {
+      await updateDoc(doc(db, "todos", todoId), {
+        completed: !todo.completed,
+      });
+      await fetchTodos();
+    } catch (e) {
+      error.value = e.message;
+    }
+  };
+
   return {
     todos,
     loading,
     error,
     fetchTodos,
     addTodo,
+    toggleTodo,
   };
 };

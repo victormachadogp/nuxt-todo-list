@@ -23,6 +23,11 @@
           class="flex items-center justify-between p-2 border rounded"
         >
           <div class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              :checked="todo.completed"
+              @change="toggleTodo(todo.id)"
+            >
             
             <span :class="{ 'line-through': todo.completed }">
               {{ todo.title }}
