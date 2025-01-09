@@ -6,11 +6,12 @@ import {
   addDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAGMq9pfg_SBDGaNjs_7-S1jUtQzX_53n8",
+  apiKey: "AIzaSyDFcLUWjDkAk7IDM3Q3Yv3T_86FtLlciLg",
   authDomain: "nuxt-back-28fe6.firebaseapp.com",
   projectId: "nuxt-back-28fe6",
   storageBucket: "nuxt-back-28fe6.firebasestorage.app",
@@ -66,6 +67,15 @@ export const useTodos = () => {
     }
   };
 
+  const deleteTodo = async (todoId) => {
+    try {
+      await deleteDoc(doc(db, "todos", todoId));
+      await fetchTodos();
+    } catch (e) {
+      error.value = e.message;
+    }
+  };
+
   return {
     todos,
     loading,
@@ -73,5 +83,6 @@ export const useTodos = () => {
     fetchTodos,
     addTodo,
     toggleTodo,
+    deleteTodo,
   };
 };

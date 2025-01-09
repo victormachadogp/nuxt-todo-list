@@ -28,12 +28,16 @@
               :checked="todo.completed"
               @change="toggleTodo(todo.id)"
             >
-            
             <span :class="{ 'line-through': todo.completed }">
               {{ todo.title }}
             </span>
           </div>
-          
+          <button
+            @click="deleteTodo(todo.id)"
+            class="text-red-500"
+          >
+            Deletar
+          </button>
         </li>
       </ul>
     </div>
@@ -44,7 +48,7 @@
   import { useTodos } from '~/services/todoService'
   
   const newTodo = ref('')
-  const { todos, loading, error, fetchTodos, addTodo, toggleTodo } = useTodos()
+  const { todos, loading, error, fetchTodos, addTodo, toggleTodo, deleteTodo } = useTodos()
   
   const handleAddTodo = async () => {
     if (newTodo.value.trim()) {
