@@ -39,6 +39,7 @@ export const useTodos = () => {
       todos.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as Omit<Todo, "id">),
+        createdAt: doc.data().createdAt?.toDate(),
       }));
     } catch (e) {
       error.value = e.message;
@@ -50,12 +51,19 @@ export const useTodos = () => {
 
   const addTodo = async (title: string): Promise<void> => {
     try {
-      await addDoc(collection(db, "todos"), {
+      const docRef = await addDoc(collection(db, "todos"), {
         title,
         completed: false,
         createdAt: new Date(),
       });
-      await fetchTodos();
+
+      todos.value.unshift({
+        id: docRef.id,
+        title,
+        completed: false,
+        createdAt: new Date(),
+      });
+
       toast.success("Tarefa criada com sucesso!");
     } catch (e) {
       error.value = e.message;

@@ -1,6 +1,6 @@
 <template>
     <ul v-if="!loading && !error" class="space-y-2">
-        <TodoItem v-for="todo in items" :key="todo.id" :todo="todo" @toggle="$emit('toggle', todo.id)"
+        <TodoItem v-for="todo in sortedItems" :key="todo.id" :todo="todo" @toggle="$emit('toggle', todo.id)"
             @update="(title) => $emit('update', todo.id, title)" @delete="$emit('delete', todo.id)" />
     </ul>
     <div v-else-if="loading" class="text-center">Carregando...</div>
@@ -9,8 +9,9 @@
 
 <script setup lang="ts">
 import type { Todo } from '@/types/todo'
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
     items: Todo[]
     loading: boolean
     error: string | null
@@ -21,4 +22,10 @@ defineEmits<{
     update: [id: string, title: string]
     delete: [id: string]
 }>()
+
+const sortedItems = computed(() => {
+    return [...props.items].sort((a, b) => {
+        return b.createdAt.getTime() - a.createdAt.getTime()
+    })
+})
 </script>
