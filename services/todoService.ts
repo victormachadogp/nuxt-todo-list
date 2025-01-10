@@ -9,11 +9,12 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import type { Todo } from "@/types/todo";
 
 export const useTodos = () => {
-  const todos = ref([]);
+  const todos = ref<Todo[]>([]);
   const loading = ref(false);
-  const error = ref(null);
+  const error = ref<string | null>(null);
 
   const config = useRuntimeConfig();
 
@@ -29,13 +30,13 @@ export const useTodos = () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  const fetchTodos = async () => {
+  const fetchTodos = async (): Promise<void> => {
     loading.value = true;
     try {
       const querySnapshot = await getDocs(collection(db, "todos"));
       todos.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        ...(doc.data() as Omit<Todo, "id">),
       }));
     } catch (e) {
       error.value = e.message;
@@ -44,7 +45,7 @@ export const useTodos = () => {
     }
   };
 
-  const addTodo = async (title) => {
+  const addTodo = async (title: string): Promise<void> => {
     try {
       await addDoc(collection(db, "todos"), {
         title,
@@ -57,7 +58,7 @@ export const useTodos = () => {
     }
   };
 
-  const updateTodo = async (todoId, title) => {
+  const updateTodo = async (todoId: string, title: string): Promise<void> => {
     try {
       await updateDoc(doc(db, "todos", todoId), { title });
       await fetchTodos();
@@ -66,19 +67,22 @@ export const useTodos = () => {
     }
   };
 
-  const toggleTodo = async (todoId) => {
+  const toggleTodo = async (todoId: string): Promise<void> => {
     const todo = todos.value.find((t) => t.id === todoId);
+    if (!todo) return;
+
     try {
+      todo.completed = !todo.completed;
       await updateDoc(doc(db, "todos", todoId), {
-        completed: !todo.completed,
+        completed: todo.completed,
       });
-      await fetchTodos();
     } catch (e) {
+      todo.completed = !todo.completed;
       error.value = e.message;
     }
   };
 
-  const deleteTodo = async (todoId) => {
+  const deleteTodo = async (todoId: string): Promise<void> => {
     try {
       await deleteDoc(doc(db, "todos", todoId));
       await fetchTodos();

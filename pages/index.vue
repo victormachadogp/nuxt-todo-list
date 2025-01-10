@@ -92,7 +92,6 @@ onMounted(() => {
 </script>
 
 <style>
-/*  */
 input[type=checkbox]:checked+span {
   background-color: #10B981;
   border-color: #10B981;
