@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import TodoList from "@/components/TodoList.vue";
-import TodoItem from "@/components/TodoItem.vue";
+import TodoItem from "@/components/TodoItem.vue"; // Verifique se está sendo importado corretamente
 
 describe("TodoList", () => {
   const mockTodos = [
@@ -26,6 +26,11 @@ describe("TodoList", () => {
         loading: true,
         error: null,
       },
+      global: {
+        components: {
+          TodoItem, // Registra o componente globalmente
+        },
+      },
     });
     expect(wrapper.text()).toContain("Carregando...");
   });
@@ -37,6 +42,11 @@ describe("TodoList", () => {
         items: [],
         loading: false,
         error: errorMessage,
+      },
+      global: {
+        components: {
+          TodoItem, // Registra o componente globalmente
+        },
       },
     });
     expect(wrapper.text()).toContain(errorMessage);
@@ -51,16 +61,13 @@ describe("TodoList", () => {
       },
       global: {
         components: {
-          TodoItem,
+          TodoItem, // Registra o componente globalmente
         },
       },
     });
 
-    // Verifica se os TodoItems foram renderizados
     const todoItems = wrapper.findAllComponents(TodoItem);
     expect(todoItems).toHaveLength(2);
-
-    // Verifica as props passadas para os componentes
     expect(todoItems[0].props("todo")).toEqual(mockTodos[0]);
     expect(todoItems[1].props("todo")).toEqual(mockTodos[1]);
   });
@@ -74,7 +81,7 @@ describe("TodoList", () => {
       },
       global: {
         components: {
-          TodoItem,
+          TodoItem, // Registra o componente globalmente
         },
       },
     });
@@ -96,7 +103,7 @@ describe("TodoList", () => {
       },
       global: {
         components: {
-          TodoItem,
+          TodoItem, // Registra o componente globalmente
         },
       },
     });
@@ -118,7 +125,7 @@ describe("TodoList", () => {
       },
       global: {
         components: {
-          TodoItem,
+          TodoItem, // Registra o componente globalmente
         },
       },
     });
