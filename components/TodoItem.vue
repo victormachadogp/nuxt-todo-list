@@ -13,7 +13,7 @@
                     </svg>
                 </span>
             </div>
-            <input v-if="isEditing" v-model="editText" @keyup.enter="handleUpdate" @blur="handleUpdate"
+            <input type="text" v-if="isEditing" v-model="editText" @keyup.enter="handleUpdate" @blur="handleUpdate"
                 class="border rounded px-2 text-sm" ref="editInput">
             <span v-else @dblclick="startEdit" :class="{ 'line-through': todo.completed }" class="text-sm">
                 {{ todo.title }}
@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import type { Todo } from '@/types/todo'
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
 const props = defineProps<{
     todo: Todo
