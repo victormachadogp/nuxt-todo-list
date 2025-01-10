@@ -84,7 +84,7 @@ describe("TodoList", () => {
 
     const toggleEvents = wrapper.emitted("toggle");
     expect(toggleEvents).toBeTruthy();
-    expect(toggleEvents[0]).toEqual(["1"]);
+    expect(toggleEvents?.[0]).toEqual(["1"]);
   });
 
   it("emits update event with correct id and title", async () => {
@@ -106,7 +106,7 @@ describe("TodoList", () => {
 
     const updateEvents = wrapper.emitted("update");
     expect(updateEvents).toBeTruthy();
-    expect(updateEvents[0]).toEqual(["1", "Updated Todo"]);
+    expect(updateEvents?.[0]).toEqual(["1", "Updated Todo"]);
   });
 
   it("emits delete event with correct id", async () => {
@@ -128,6 +128,6 @@ describe("TodoList", () => {
 
     const deleteEvents = wrapper.emitted("delete");
     expect(deleteEvents).toBeTruthy();
-    expect(deleteEvents[0]).toEqual(["1"]);
+    expect(deleteEvents && deleteEvents[0]).toEqual(["1"]);
   });
 });
