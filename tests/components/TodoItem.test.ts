@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import TodoItem from "@/components/TodoItem.vue";
 import { nextTick } from "vue";
@@ -35,10 +35,10 @@ describe("TodoItem", () => {
     const wrapper = mount(TodoItem, {
       props: { todo: mockTodo },
     });
-    // Encontra o span que contém o título
+
     const titleSpan = wrapper.find("span:not(.flex)");
     await titleSpan.trigger("dblclick");
-    await nextTick(); // Importante: aguardar a atualização do DOM
+    await nextTick();
 
     expect(wrapper.find('input[class*="border rounded"]').exists()).toBe(true);
   });
@@ -48,18 +48,16 @@ describe("TodoItem", () => {
       props: { todo: mockTodo },
     });
 
-    // Primeiro, ativa o modo de edição
     const titleSpan = wrapper.find("span:not(.flex)");
     await titleSpan.trigger("dblclick");
     await nextTick();
 
-    // Agora encontra o input e atualiza o valor
     const input = wrapper.find('input[class*="border rounded"]');
     await input.setValue("Updated Todo");
     await input.trigger("keyup.enter");
 
     expect(wrapper.emitted("update")).toBeTruthy();
-    expect(wrapper.emitted("update")[0]).toEqual(["Updated Todo"]);
+    expect(wrapper.emitted("update")?.[0]).toEqual(["Updated Todo"]);
   });
 
   it("emits delete event when delete button is clicked", async () => {
