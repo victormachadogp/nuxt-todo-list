@@ -2,10 +2,7 @@
   <div class="max-w-lg mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Todo List</h1>
 
-    <div class="mb-4">
-      <input v-model="newTodo" @keyup.enter="handleAddTodo" type="text" placeholder="Adicionar nova tarefa"
-        class="w-full p-2 border rounded">
-    </div>
+    <TodoInput placeholder="Adicionar nova tarefa" @submit="handleAddTodo" />
 
     <TodoList :items="todos" :loading="loading" :error="error" @toggle="toggleTodo" @update="updateTodo"
       @delete="deleteTodo" />
@@ -13,17 +10,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useTodos } from '~/services/todoService'
 
-const newTodo = ref('')
 const { todos, loading, error, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo } = useTodos()
 
-const handleAddTodo = async () => {
-  if (newTodo.value.trim()) {
-    await addTodo(newTodo.value)
-    newTodo.value = ''
-  }
+const handleAddTodo = async (text) => {
+  await addTodo(text)
 }
 
 onMounted(() => {
