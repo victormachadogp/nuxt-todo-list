@@ -10,11 +10,13 @@ import {
   doc,
 } from "firebase/firestore";
 import type { Todo } from "@/types/todo";
+import { useToast } from "vue-toastification";
 
 export const useTodos = () => {
   const todos = ref<Todo[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
+  const toast = useToast();
 
   const config = useRuntimeConfig();
 
@@ -40,6 +42,7 @@ export const useTodos = () => {
       }));
     } catch (e) {
       error.value = e.message;
+      toast.error("Erro ao carregar as tarefas");
     } finally {
       loading.value = false;
     }
@@ -53,17 +56,26 @@ export const useTodos = () => {
         createdAt: new Date(),
       });
       await fetchTodos();
+      toast.success("Tarefa criada com sucesso!");
     } catch (e) {
       error.value = e.message;
+      toast.error("Erro ao criar a tarefa");
     }
   };
 
   const updateTodo = async (todoId: string, title: string): Promise<void> => {
     try {
       await updateDoc(doc(db, "todos", todoId), { title });
-      await fetchTodos();
+      const todoIndex = todos.value.findIndex((todo) => todo.id === todoId);
+      if (todoIndex !== -1) {
+        todos.value[todoIndex] = {
+          ...todos.value[todoIndex],
+          title,
+        };
+      }
     } catch (e) {
       error.value = e.message;
+      toast.error("Erro ao atualizar a tarefa");
     }
   };
 
@@ -76,18 +88,23 @@ export const useTodos = () => {
       await updateDoc(doc(db, "todos", todoId), {
         completed: todo.completed,
       });
+      toast.info(todo.completed ? "Tarefa concluída!" : "Tarefa reaberta!");
     } catch (e) {
       todo.completed = !todo.completed;
       error.value = e.message;
+      toast.error("Erro ao atualizar o status da tarefa");
     }
   };
 
   const deleteTodo = async (todoId: string): Promise<void> => {
     try {
       await deleteDoc(doc(db, "todos", todoId));
-      await fetchTodos();
+      // Atualiza o estado local em vez de fazer fetch
+      todos.value = todos.value.filter((todo) => todo.id !== todoId);
+      toast.info("Tarefa excluída com sucesso!");
     } catch (e) {
       error.value = e.message;
+      toast.error("Erro ao excluir a tarefa");
     }
   };
 
