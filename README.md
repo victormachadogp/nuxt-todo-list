@@ -92,6 +92,12 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
 - Componente: `TodoItem.vue`
 - Botão de exclusão permite remover a tarefa permanentemente.
 
+### Filtrar Tarefas
+
+- Componente: `TodoFilter.vue`
+
+- Permite exibir apenas tarefas completas, pendentes ou todas.
+
 ## Integração com Firebase
 
 - O Firebase é inicializado no arquivo `firebase.ts`.
