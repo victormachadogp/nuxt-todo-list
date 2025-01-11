@@ -4,8 +4,6 @@
 
 Este projeto é uma aplicação simples de lista de tarefas (Todo List) construída com Nuxt 3 e Firebase. Ele utiliza um banco de dados Firestore para armazenar tarefas e inclui funcionalidades como adicionar, editar, excluir e alternar o status de conclusão das tarefas. A interface é estilizada com Tailwind CSS e mensagens de notificação são exibidas usando a biblioteca Vue Toastification.
 
----
-
 ## Estrutura do Projeto
 
 - **Páginas**:
@@ -22,8 +20,6 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
 - **Outros Arquivos**:
   - `toast.ts`: Configuração do Vue Toastification.
   - `package.json`: Gerenciamento de dependências e scripts de build/teste.
-
----
 
 ## Configuração e Instalação
 
@@ -64,8 +60,6 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
 
 5. Acesse a aplicação em [http://localhost:3000](http://localhost:3000).
 
----
-
 ## Funcionalidades
 
 ### Adicionar Tarefa
@@ -98,8 +92,6 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
 - Componente: `TodoItem.vue`
 - Botão de exclusão permite remover a tarefa permanentemente.
 
----
-
 ## Integração com Firebase
 
 - O Firebase é inicializado no arquivo `firebase.ts`.
@@ -107,16 +99,12 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
 - Configuração do Firebase:
   - As credenciais estão no arquivo `.env` e são carregadas com `useRuntimeConfig()` do Nuxt 3.
 
----
-
 ## Estilização
 
 - Tailwind CSS é utilizado para criar uma interface responsiva e moderna.
 - Regras específicas foram adicionadas para:
   - Exibir o estado "concluído" com estilo riscado.
   - Alterar a aparência ao passar o mouse ou interagir com elementos.
-
----
 
 ## Testes
 
@@ -130,8 +118,6 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
   npm run test:coverage
   ```
 - Testes foram implementados para garantir a funcionalidade dos componentes e serviços principais.
-
----
 
 ## Melhorias Futuras
 
