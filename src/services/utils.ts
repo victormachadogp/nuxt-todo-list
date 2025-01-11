@@ -1,4 +1,4 @@
-import type { Todo } from "@/types/todo";
+import type { Todo } from "../types/todo";
 
 export function sortTodosByDate(todos: Todo[]): Todo[] {
   return [...todos].sort((a, b) => {
