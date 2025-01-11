@@ -1,75 +1,140 @@
-# Nuxt Minimal Starter
+# Documentação do Projeto Todo List em Nuxt 3
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Visão Geral
 
-## Setup
+Este projeto é uma aplicação simples de lista de tarefas (Todo List) construída com Nuxt 3 e Firebase. Ele utiliza um banco de dados Firestore para armazenar tarefas e inclui funcionalidades como adicionar, editar, excluir e alternar o status de conclusão das tarefas. A interface é estilizada com Tailwind CSS e mensagens de notificação são exibidas usando a biblioteca Vue Toastification.
 
-Make sure to install dependencies:
+---
 
-```bash
-# npm
-npm install
+## Estrutura do Projeto
 
-# pnpm
-pnpm install
+- **Páginas**:
+  - `index.vue`: Página principal da aplicação contendo a interface da lista de tarefas.
+- **Serviços**:
+  - `todoService.ts`: Gerencia a lógica de CRUD (Create, Read, Update, Delete) das tarefas no Firestore.
+  - `firebase.ts`: Configuração e inicialização do Firebase.
+- **Componentes**:
+  - `TodoInput.vue`: Campo de entrada para adicionar novas tarefas.
+  - `TodoList.vue`: Exibe a lista de tarefas ordenadas.
+  - `TodoItem.vue`: Componente individual para cada tarefa, com opções de edição, exclusão e alternância de status.
+- **Estilo**:
+  - Utilizando Tailwind CSS para estilizações específicas nos componentes.
+- **Outros Arquivos**:
+  - `toast.ts`: Configuração do Vue Toastification.
+  - `package.json`: Gerenciamento de dependências e scripts de build/teste.
 
-# yarn
-yarn install
+---
 
-# bun
-bun install
-```
+## Configuração e Instalação
 
-## Development Server
+### Pré-requisitos
 
-Start the development server on `http://localhost:3000`:
+- Node.js (>= 16.x.x)
+- npm ou yarn
+- Conta no Firebase com um projeto configurado
 
-```bash
-# npm
-npm run dev
+### Passos
 
-# pnpm
-pnpm dev
+1. Clone este repositório:
 
-# yarn
-yarn dev
+   ```bash
+   git clone <link_do_repositorio>
+   cd nuxt-todo-list
+   ```
 
-# bun
-bun run dev
-```
+2. Instale as dependências:
 
-## Production
+   ```bash
+   npm install
+   ```
 
-Build the application for production:
+3. Configure as variáveis de ambiente:
 
-```bash
-# npm
-npm run build
+   - Crie um arquivo `.env` na raiz do projeto.
+   - Adicione a chave da API do Firebase no formato:
+     ```env
+     FIREBASE_API_KEY=<sua_chave_api>
+     ```
 
-# pnpm
-pnpm build
+4. Execute o servidor de desenvolvimento:
 
-# yarn
-yarn build
+   ```bash
+   npm run dev
+   ```
 
-# bun
-bun run build
-```
+5. Acesse a aplicação em [http://localhost:3000](http://localhost:3000).
 
-Locally preview production build:
+---
 
-```bash
-# npm
-npm run preview
+## Funcionalidades
 
-# pnpm
-pnpm preview
+### Adicionar Tarefa
 
-# yarn
-yarn preview
+- Componente: `TodoInput.vue`
+- Usuários podem inserir um texto no campo e pressionar Enter para adicionar uma nova tarefa.
+- Restrições:
+  - Mínimo de 3 caracteres.
+  - Máximo de 100 caracteres.
 
-# bun
-bun run preview
-```
+### Listar Tarefas
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Componente: `TodoList.vue`
+- Exibe tarefas ordenadas por data de criação (mais recentes primeiro).
+- Mostra mensagens de "Carregando" ou erros, quando aplicável.
+
+### Alterar Status de Tarefa
+
+- Componente: `TodoItem.vue`
+- Ao clicar na caixa de seleção, o status de conclusão da tarefa é alternado entre "concluído" e "não concluído".
+
+### Editar Tarefa
+
+- Componente: `TodoItem.vue`
+- Ao clicar duas vezes no texto de uma tarefa ou no ícone de editar, ela entra no modo de edição.
+- Pressionar Enter ou sair do campo salva as alterações.
+
+### Excluir Tarefa
+
+- Componente: `TodoItem.vue`
+- Botão de exclusão permite remover a tarefa permanentemente.
+
+---
+
+## Integração com Firebase
+
+- O Firebase é inicializado no arquivo `firebase.ts`.
+- As operações CRUD são implementadas no `todoService.ts` usando a biblioteca Firestore SDK.
+- Configuração do Firebase:
+  - As credenciais estão no arquivo `.env` e são carregadas com `useRuntimeConfig()` do Nuxt 3.
+
+---
+
+## Estilização
+
+- Tailwind CSS é utilizado para criar uma interface responsiva e moderna.
+- Regras específicas foram adicionadas para:
+  - Exibir o estado "concluído" com estilo riscado.
+  - Alterar a aparência ao passar o mouse ou interagir com elementos.
+
+---
+
+## Testes
+
+- **Framework de Teste**: Vitest
+- Comando para rodar testes:
+  ```bash
+  npm run test
+  ```
+- Cobertura de testes:
+  ```bash
+  npm run test:coverage
+  ```
+- Testes foram implementados para garantir a funcionalidade dos componentes e serviços principais.
+
+---
+
+## Melhorias Futuras
+
+- Adicionar autenticação de usuário.
+- Implementar paginação ou rolagem infinita para listas grandes.
+- Adicionar testes mais abrangentes para cenários edge cases.
