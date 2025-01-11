@@ -11,7 +11,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useTodos } from '~/services/todoService'
+import { useTodos } from '../src/services/todoService'
 
 const { todos, loading, error, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo } = useTodos()
 
