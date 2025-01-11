@@ -6,8 +6,9 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  type Firestore,
 } from "firebase/firestore";
-import type { Todo } from "@/types/todo";
+import type { Todo } from "../types/todo";
 import { useToast } from "vue-toastification";
 import { initializeFirebase } from "./firebase";
 
@@ -30,17 +31,25 @@ export const useTodos = () => {
 
   const { db } = initializeFirebase(firebaseConfig);
 
+  const getDb = (): Firestore => {
+    if (!db) {
+      throw new Error("Firestore não foi inicializado corretamente");
+    }
+    return db;
+  };
+
   const fetchTodos = async (): Promise<void> => {
     loading.value = true;
     try {
-      const querySnapshot = await getDocs(collection(db, "todos"));
+      const querySnapshot = await getDocs(collection(getDb(), "todos"));
       todos.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as Omit<Todo, "id">),
         createdAt: doc.data().createdAt?.toDate(),
       }));
     } catch (e) {
-      error.value = e.message;
+      const errorMessage = e instanceof Error ? e.message : "Erro desconhecido";
+      error.value = errorMessage;
       toast.error("Erro ao carregar as tarefas");
     } finally {
       loading.value = false;
@@ -49,7 +58,7 @@ export const useTodos = () => {
 
   const addTodo = async (title: string): Promise<void> => {
     try {
-      const docRef = await addDoc(collection(db, "todos"), {
+      const docRef = await addDoc(collection(getDb(), "todos"), {
         title,
         completed: false,
         createdAt: new Date(),
@@ -64,14 +73,15 @@ export const useTodos = () => {
 
       toast.success("Tarefa criada com sucesso!");
     } catch (e) {
-      error.value = e.message;
+      const errorMessage = e instanceof Error ? e.message : "Erro desconhecido";
+      error.value = errorMessage;
       toast.error("Erro ao criar a tarefa");
     }
   };
 
   const updateTodo = async (todoId: string, title: string): Promise<void> => {
     try {
-      await updateDoc(doc(db, "todos", todoId), { title });
+      await updateDoc(doc(getDb(), "todos", todoId), { title });
       const todoIndex = todos.value.findIndex((todo) => todo.id === todoId);
       if (todoIndex !== -1) {
         todos.value[todoIndex] = {
@@ -80,7 +90,8 @@ export const useTodos = () => {
         };
       }
     } catch (e) {
-      error.value = e.message;
+      const errorMessage = e instanceof Error ? e.message : "Erro desconhecido";
+      error.value = errorMessage;
       toast.error("Erro ao atualizar a tarefa");
     }
   };
@@ -91,24 +102,25 @@ export const useTodos = () => {
 
     try {
       todo.completed = !todo.completed;
-      await updateDoc(doc(db, "todos", todoId), {
+      await updateDoc(doc(getDb(), "todos", todoId), {
         completed: todo.completed,
       });
     } catch (e) {
       todo.completed = !todo.completed;
-      error.value = e.message;
+      const errorMessage = e instanceof Error ? e.message : "Erro desconhecido";
+      error.value = errorMessage;
       toast.error("Erro ao atualizar o status da tarefa");
     }
   };
 
   const deleteTodo = async (todoId: string): Promise<void> => {
     try {
-      await deleteDoc(doc(db, "todos", todoId));
-      // Atualiza o estado local em vez de fazer fetch
+      await deleteDoc(doc(getDb(), "todos", todoId));
       todos.value = todos.value.filter((todo) => todo.id !== todoId);
       toast.info("Tarefa excluída com sucesso!");
     } catch (e) {
-      error.value = e.message;
+      const errorMessage = e instanceof Error ? e.message : "Erro desconhecido";
+      error.value = errorMessage;
       toast.error("Erro ao excluir a tarefa");
     }
   };
