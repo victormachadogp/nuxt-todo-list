@@ -19,4 +19,12 @@ export default defineNuxtConfig({
       firebaseApiKey: process.env.FIREBASE_API_KEY,
     },
   },
+  vite: {
+    optimizeDeps: {
+      include: ["vue-toastification"],
+    },
+    ssr: {
+      noExternal: ["vue-toastification"],
+    },
+  },
 });
