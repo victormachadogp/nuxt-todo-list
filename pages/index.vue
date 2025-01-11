@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-lg mx-auto p-4">
+  <div class="max-w-2xl lg:mx-auto px-4 py-6 my-12 mx-2 bg-white rounded-lg shadow-lg">
     <h1 class="text-2xl font-bold mb-4">Todo List</h1>
 
     <TodoInput placeholder="Adicionar nova tarefa" @submit="handleAddTodo" />
