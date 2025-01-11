@@ -4,8 +4,8 @@
 
     <TodoInput placeholder="Adicionar nova tarefa" @submit="handleAddTodo" />
 
-    <TodoList :items="todos" :loading="loading" :error="error" @toggle="toggleTodo" @update="updateTodo"
-      @delete="deleteTodo" />
+    <TodoList v-memo="[todos.length, loading, error]" :items="todos" :loading="loading" :error="error"
+      @toggle="toggleTodo" @update="updateTodo" @delete="deleteTodo" />
   </div>
 </template>
 
