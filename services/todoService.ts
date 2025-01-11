@@ -1,7 +1,5 @@
 import { ref } from "vue";
-import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
   collection,
   addDoc,
   getDocs,
@@ -11,6 +9,7 @@ import {
 } from "firebase/firestore";
 import type { Todo } from "@/types/todo";
 import { useToast } from "vue-toastification";
+import { initializeFirebase } from "./firebase";
 
 export const useTodos = () => {
   const todos = ref<Todo[]>([]);
@@ -29,8 +28,7 @@ export const useTodos = () => {
     appId: "1:315538127937:web:fadb80711d5a0c6dd49ac0",
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  const { db } = initializeFirebase(firebaseConfig);
 
   const fetchTodos = async (): Promise<void> => {
     loading.value = true;
