@@ -1,7 +1,8 @@
 <template>
     <ul v-if="!loading && !error" class="space-y-2">
-        <TodoItem v-for="todo in sortedItems" :key="todo.id" :todo="todo" @toggle="$emit('toggle', todo.id)"
-            @update="(title) => $emit('update', todo.id, title)" @delete="$emit('delete', todo.id)" />
+        <TodoItem v-for="todo in sortedItems" :key="todo.id" track-by="id" :todo="todo"
+            @toggle="$emit('toggle', todo.id)" @update="(title) => $emit('update', todo.id, title)"
+            @delete="$emit('delete', todo.id)" />
     </ul>
     <div v-else-if="loading" class="text-center">Carregando...</div>
     <div v-else class="text-red-500">{{ error }}</div>
