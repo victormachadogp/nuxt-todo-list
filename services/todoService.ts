@@ -96,7 +96,6 @@ export const useTodos = () => {
       await updateDoc(doc(db, "todos", todoId), {
         completed: todo.completed,
       });
-      toast.info(todo.completed ? "Tarefa concluída!" : "Tarefa reaberta!");
     } catch (e) {
       todo.completed = !todo.completed;
       error.value = e.message;
