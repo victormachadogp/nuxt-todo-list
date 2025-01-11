@@ -15,9 +15,18 @@ import { useTodos } from '~/services/todoService'
 
 const { todos, loading, error, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo } = useTodos()
 
-const handleAddTodo = async (text) => {
-  await addTodo(text)
+function debounce(fn, delay) {
+  let timer = null
+  return (...args) => {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => fn(...args), delay)
+  }
 }
+
+const handleAddTodo = debounce(async (text) => {
+  await addTodo(text)
+}, 300)
+
 
 onMounted(() => {
   fetchTodos()
