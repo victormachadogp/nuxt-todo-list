@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import TodoItem from "@/components/TodoItem.vue";
+import TodoItem from "@/src/components/TodoItem.vue";
 import { nextTick } from "vue";
 
 describe("TodoItem", () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import TodoList from "@/components/TodoList.vue";
-import TodoItem from "@/components/TodoItem.vue"; // Verifique se está sendo importado corretamente
+import TodoList from "@/src/components/TodoList.vue";
+import TodoItem from "@/src/components/TodoItem.vue";
 
 describe("TodoList", () => {
   const mockTodos = [
