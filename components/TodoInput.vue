@@ -1,8 +1,7 @@
 <template>
     <form @submit.prevent="handleSubmit" class="flex gap-2 mb-6">
         <input type="text" v-model="text" :placeholder="placeholder"
-            class="w-full pl-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            :class="{ 'border-red-400': showError }">
+            class="w-full pl-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
 
     </form>
 </template>
