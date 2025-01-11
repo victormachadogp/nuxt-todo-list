@@ -12,21 +12,13 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useTodos } from '../src/services/todoService'
+import { debounce } from '../src/services/utils'
 
 const { todos, loading, error, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo } = useTodos()
-
-function debounce(fn, delay) {
-  let timer = null
-  return (...args) => {
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
-  }
-}
 
 const handleAddTodo = debounce(async (text) => {
   await addTodo(text)
 }, 300)
-
 
 onMounted(() => {
   fetchTodos()

@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import type { Todo } from '../types/todo'
 import { computed } from 'vue'
+import { sortTodosByDate } from '../services/utils'
 
 const props = defineProps<{
     items: Todo[]
@@ -25,8 +26,6 @@ defineEmits<{
 }>()
 
 const sortedItems = computed(() => {
-    return [...props.items].sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime()
-    })
+    return sortTodosByDate(props.items)
 })
 </script>
