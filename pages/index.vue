@@ -6,6 +6,9 @@
 
     <TodoList v-memo="[todos.length, loading, error]" :items="todos" :loading="loading" :error="error"
       @toggle="toggleTodo" @update="updateTodo" @delete="deleteTodo" />
+
+    <div v-if="todos.length === 0" class="flex justify-center py-5 text-sm text-gray-400">Adicione uma tarefa para
+      começar</div>
   </div>
 </template>
 
