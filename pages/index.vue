@@ -27,15 +27,3 @@ onMounted(() => {
   fetchTodos()
 })
 </script>
-
-<style>
-input[type=checkbox]:checked+span {
-  background-color: #10B981;
-  border-color: #10B981;
-  color: #fff;
-}
-
-.line-through {
-  color: #9CA3AF;
-}
-</style>

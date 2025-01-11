@@ -2,9 +2,10 @@
     <li class="flex items-center justify-between p-2 rounded hover:bg-gray-100">
         <div class="flex items-center gap-4">
             <div class="flex items-center">
-                <input type="checkbox" :checked="todo.completed" class="hidden">
-                <span @click="$emit('toggle')"
-                    class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-300 rounded-full cursor-pointer">
+                <input type="checkbox" :checked="todo.completed" class="hidden peer">
+                <span @click="$emit('toggle')" class="flex items-center justify-center w-5 h-5 border-2 rounded-full cursor-pointer
+                           border-gray-300 text-transparent 
+                           peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:text-white">
                     <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
                         <path fill-rule="evenodd"
@@ -15,7 +16,8 @@
             </div>
             <input type="text" v-if="isEditing" v-model="editText" @keyup.enter="handleUpdate" @blur="handleUpdate"
                 class="border rounded px-2 text-sm" ref="editInput">
-            <span v-else @dblclick="startEdit" :class="{ 'line-through': todo.completed }" class="text-sm">
+            <span v-else @dblclick="startEdit" :class="{ 'line-through text-gray-400': todo.completed }"
+                class="text-sm">
                 {{ todo.title }}
             </span>
         </div>
@@ -40,6 +42,7 @@
     </li>
 </template>
 
+
 <script setup lang="ts">
 import type { Todo } from '../types/todo'
 import { ref, nextTick } from 'vue'
@@ -56,7 +59,7 @@ const emit = defineEmits<{
 
 const isEditing = ref(false)
 const editText = ref(props.todo.title)
-const editInput = ref(null)
+const editInput = ref<HTMLInputElement | null>(null)
 
 const startEdit = () => {
     isEditing.value = true
