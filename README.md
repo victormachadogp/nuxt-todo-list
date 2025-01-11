@@ -15,6 +15,7 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
   - `TodoInput.vue`: Campo de entrada para adicionar novas tarefas.
   - `TodoList.vue`: Exibe a lista de tarefas ordenadas.
   - `TodoItem.vue`: Componente individual para cada tarefa, com opções de edição, exclusão e alternância de status.
+  - `TodoFilter.vue`: permite filtrar as tarefas entre Todas, Pendentes e Completas e exibe a contagem de tarefas em cada status.
 - **Estilo**:
   - Utilizando Tailwind CSS para estilizações específicas nos componentes.
 - **Outros Arquivos**:
