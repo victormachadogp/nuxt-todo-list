@@ -126,6 +126,20 @@ Este projeto é uma aplicação simples de lista de tarefas (Todo List) constru�
   ```
 - Testes foram implementados para garantir a funcionalidade dos componentes e serviços principais.
 
+## Gerenciamento de Estado
+
+Este projeto não utiliza **Pinia** ou **Vuex** para gerenciamento de estado, pois a aplicação é relativamente pequena e os componentes têm proximidade suficiente para compartilhar dados diretamente através de propriedades (props) e eventos (emits). Essa abordagem é eficiente para cenários onde a complexidade do estado compartilhado é baixa.
+
+- Complexidade x Benefício:
+
+  - As operações de estado são localizadas e não precisam ser compartilhadas entre rotas ou componentes distantes
+  - O estado da aplicação é principalmente derivado do Firestore, que já atua como fonte única da verdade
+
+- Performance:
+
+  - A reatividade nativa do Vue é suficiente para o escopo atual da aplicação
+  - Mudanças de estado são propagadas eficientemente através da hierarquia de componentes existente
+
 ## Melhorias Futuras
 
 - Adicionar autenticação de usuário.
