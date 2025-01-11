@@ -22,11 +22,11 @@ export const useTodos = () => {
 
   const firebaseConfig = {
     apiKey: config.public.firebaseApiKey,
-    authDomain: "nuxt-back-28fe6.firebaseapp.com",
-    projectId: "nuxt-back-28fe6",
-    storageBucket: "nuxt-back-28fe6.firebasestorage.app",
-    messagingSenderId: "315538127937",
-    appId: "1:315538127937:web:fadb80711d5a0c6dd49ac0",
+    authDomain: config.public.firebaseAuthDomain,
+    projectId: config.public.firebaseProjectId,
+    storageBucket: config.public.firebaseStorageBucket,
+    messagingSenderId: config.public.firebaseMessagingSenderId,
+    appId: config.public.firebaseAppId,
   };
 
   const { db } = initializeFirebase(firebaseConfig);
