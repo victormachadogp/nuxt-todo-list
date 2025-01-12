@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type { Todo, TodoFilter } from '../types/todo'
 import { computed, ref } from 'vue'
-import { sortTodosByDate, filterTodosByStatus } from '../services/utils'
+import { sortTodosByDate, filterTodosByStatus } from '../composables/utils'
 
 const props = defineProps<{
     items: Todo[]

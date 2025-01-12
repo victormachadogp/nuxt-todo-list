@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type { Todo, TodoFilter } from '../types/todo'
-import { filterTodosByStatus } from '../services/utils'
+import { filterTodosByStatus } from '../composables/utils'
 
 const props = defineProps<{
     currentFilter: TodoFilter
